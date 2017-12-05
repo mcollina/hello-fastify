@@ -8,19 +8,19 @@ const {
 } = require('tap')
 const service = require('../')
 
-let server
+let app
 beforeEach((done) => {
-  server = Fastify()
-  server.register(service)
-  server.ready(done)
+  app = Fastify()
+  app.register(service)
+  app.ready(done)
 })
 
 afterEach((done) => {
-  server.close(done)
+  app.close(done)
 })
 
 test('GET /', function (t) {
-  server.inject({
+  app.inject({
     method: 'GET',
     url: '/'
   }, function (response) {

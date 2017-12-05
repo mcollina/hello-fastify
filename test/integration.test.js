@@ -9,23 +9,23 @@ const {
 } = require('tap')
 const service = require('../')
 
-let server
+let app
 let address
 beforeEach((done) => {
-  server = Fastify()
-  server.register(service)
-  server.listen(0, (err) => {
+  app = Fastify()
+  app.register(service)
+  app.listen(0, (err) => {
     if (err) {
       return done(err)
     }
 
-    address = `http://localhost:${server.server.address().port}/`
+    address = `http://localhost:${app.server.address().port}/`
     done()
   })
 })
 
 afterEach((done) => {
-  server.close(done)
+  app.close(done)
 })
 
 test('GET /', function (t) {
