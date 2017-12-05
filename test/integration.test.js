@@ -1,7 +1,7 @@
 'use strict'
 
 const Fastify = require('fastify')
-const request = require('request')
+const fetch = require('node-fetch')
 const {
   beforeEach,
   afterEach,
@@ -28,12 +28,8 @@ afterEach((done) => {
   app.close(done)
 })
 
-test('GET /', function (t) {
-  t.plan(3)
-
-  request.get(address, function (err, res, body) {
-    t.error(err)
-    t.equal(res.statusCode, 200)
-    t.deepEqual(JSON.parse(body), { hello: 'world' })
-  })
+test('GET /', async function (t) {
+  const res = await fetch(address)
+  t.equal(res.status, 200)
+  t.deepEqual(await res.json(), { hello: 'world' })
 })

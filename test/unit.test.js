@@ -19,13 +19,12 @@ afterEach((done) => {
   app.close(done)
 })
 
-test('GET /', function (t) {
-  app.inject({
+test('GET /', async function (t) {
+  const response = await app.inject({
     method: 'GET',
     url: '/'
-  }, function (response) {
-    t.equal(response.statusCode, 200)
-    t.deepEqual(JSON.parse(response.payload), { hello: 'world' })
-    t.end()
   })
+
+  t.equal(response.statusCode, 200)
+  t.deepEqual(JSON.parse(response.payload), { hello: 'world' })
 })
